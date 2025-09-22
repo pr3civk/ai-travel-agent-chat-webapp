@@ -13,7 +13,6 @@ export enum NodeEnv {
  */
 const server = z.object({
   NODE_ENV: z.enum(NodeEnv).optional().default(NodeEnv.Development),
- 
 });
 
 /**
