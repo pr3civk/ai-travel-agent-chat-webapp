@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { APP_ROUTES } from "@/utils/routes";
+import { APP_ROUTES } from "@/config/routes";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";

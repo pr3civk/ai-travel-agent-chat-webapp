@@ -3,7 +3,7 @@ import {
     createRouteMatcher,
     nextjsMiddlewareRedirect,
   } from "@convex-dev/auth/nextjs/server";
-import { APP_ROUTES } from "./utils/routes";
+import { APP_ROUTES } from "./config/routes";
   
   const isSignInPage = createRouteMatcher([APP_ROUTES.SIGN_IN]);
   const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/chats"]);

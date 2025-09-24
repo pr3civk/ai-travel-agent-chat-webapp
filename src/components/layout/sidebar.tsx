@@ -30,7 +30,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "../ui/sidebar";
-import { APP_ROUTES } from "@/utils/routes";
+import { APP_ROUTES } from "@/config/routes";
 import { TooltipContent } from "../ui/tooltip";
 import { TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Tooltip } from "../ui/tooltip";

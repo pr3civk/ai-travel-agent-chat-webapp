@@ -1,6 +1,6 @@
 "use client";
 
-import { APP_ROUTES } from "@/utils/routes";
+import { APP_ROUTES } from "@/config/routes";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { toast } from "sonner";

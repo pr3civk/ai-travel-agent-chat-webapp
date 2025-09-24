@@ -13,6 +13,7 @@ export enum NodeEnv {
  */
 const server = z.object({
   NODE_ENV: z.enum(NodeEnv).optional().default(NodeEnv.Development),
+  OPEN_AI_KEY: z.string(),
 });
 
 /**
@@ -21,6 +22,7 @@ const server = z.object({
  */
 const client = z.object({
   NEXT_PUBLIC_CONVEX_URL: z.string(),
+  NEXT_PUBLIC_CONVEX_API_CALL_URL: z.string(),
   NEXT_PUBLIC_URL: z.string().optional().default("http://localhost:3000"),
 });
 
@@ -32,6 +34,11 @@ const processEnv = () => ({
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+  NEXT_PUBLIC_CONVEX_API_CALL_URL: process.env.NEXT_PUBLIC_CONVEX_URL?.replace(
+    /.cloud$/,
+    ".site"
+  ),
+  OPEN_AI_KEY: process.env.OPEN_AI_KEY,
 });
 
 const merged = server.extend(client.shape);
