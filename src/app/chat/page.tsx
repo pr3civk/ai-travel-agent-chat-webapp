@@ -1,6 +1,6 @@
-import { APP_ROUTES } from "@/config/routes";
-import { generateNewChatId } from "@/utils/chat";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
+import { APP_ROUTES } from '@/config/routes';
+import { generateNewChatId } from '@/utils/chat';
 
 export default function RedirectToChatPage() {
   const newChatUrl = generateNewChatId();

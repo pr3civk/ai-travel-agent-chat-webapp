@@ -1,8 +1,8 @@
 'use client';
 
-import { env } from "@/config/env";
-import { ConvexReactClient } from "convex/react";
-import { ConvexAuthNextjsProvider } from "@convex-dev/auth/nextjs";
+import { ConvexAuthNextjsProvider } from '@convex-dev/auth/nextjs';
+import { ConvexReactClient } from 'convex/react';
+import { env } from '@/config/env';
 
 export const convex = new ConvexReactClient(env.NEXT_PUBLIC_CONVEX_URL);
 

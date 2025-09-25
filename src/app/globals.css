@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -113,37 +113,54 @@
 }
 
 /* Glassmorphism sidebar styles */
-[data-sidebar="sidebar"] {
+[data-sidebar='sidebar'] {
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(20px) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
 }
 
-[data-sidebar="sidebar"] * {
+[data-sidebar='sidebar'] * {
   color: white !important;
 }
 
-[data-sidebar="menu-button"]:hover {
+[data-sidebar='menu-button']:hover {
   background: rgba(255, 255, 255, 0.15) !important;
   color: white !important;
 }
 
-[data-sidebar="menu-button"][data-active="true"] {
+[data-sidebar='menu-button'][data-active='true'] {
   background: rgba(255, 255, 255, 0.15) !important;
   color: white !important;
 }
 
 /* Mobile sidebar glassmorphism */
-[data-mobile="true"] {
+[data-mobile='true'] {
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(20px) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-[data-mobile="true"] * {
+[data-mobile='true'] * {
   color: white !important;
 }
+
+::-webkit-scrollbar-thumb {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+* {
+  scrollbar-width: 10px;
+  scrollbar-color: #c0c0c0 rgba(255, 255, 255, 0.1);
+}
+
 
 @layer base {
   * {

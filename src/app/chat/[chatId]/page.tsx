@@ -1,10 +1,10 @@
-import { APP_ROUTES } from "@/config/routes";
-import ChatBox from "./components/chat-box";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
+import { APP_ROUTES } from '@/config/routes';
+import ChatBox from './components/chat-box';
 
-interface Props {
+type Props = {
   params: Promise<{ chatId: string | undefined }>;
-}
+};
 
 export default async function ChatPage({ params }: Props) {
   const { chatId } = await params;
@@ -13,7 +13,6 @@ export default async function ChatPage({ params }: Props) {
     // TODO: add proper logic here
     return redirect(APP_ROUTES.CHAT());
   }
-
 
   return <ChatBox chatId={chatId} />;
 }

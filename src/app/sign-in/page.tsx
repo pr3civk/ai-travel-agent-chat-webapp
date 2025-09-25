@@ -1,17 +1,21 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useAuthActions } from '@convex-dev/auth/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from 'convex/react';
+import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -19,23 +23,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { useAuthActions } from "@convex-dev/auth/react";
-import { APP_ROUTES } from "@/config/routes";
-import { useState } from "react";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { APP_ROUTES } from '@/config/routes';
+import { api } from '../../../convex/_generated/api';
 
 const loginSchema = z.object({
   email: z
-    .email("Please enter a valid email address")
-    .min(1, "Email is required"),
+    .email('Please enter a valid email address')
+    .min(1, 'Email is required'),
   password: z
     .string()
-    .min(1, "Password is required")
-    .min(8, "Password must be at least 8 characters"),
+    .min(1, 'Password is required')
+    .min(8, 'Password must be at least 8 characters'),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -47,8 +47,8 @@ export default function SignInPage() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -61,24 +61,24 @@ export default function SignInPage() {
         email: values.email,
       });
 
-      await authActions.signIn("password", {
+      await authActions.signIn('password', {
         ...values,
         redirectTo: APP_ROUTES.CHATS(),
-        flow: isUserExists ? "signIn" : "signUp",
+        flow: isUserExists ? 'signIn' : 'signUp',
       });
-      toast.success("Signed in successfully");
+      toast.success('Signed in successfully');
       form.reset();
     } catch (error) {
       setIsLoading(false);
       if (error instanceof Error) {
-        toast.error("Failed to sign in", {
+        toast.error('Failed to sign in', {
           description: error.message,
         });
         return;
       }
-      toast.error("Unknown error occurred while signing in");
-      form.setError("root.serverError", {
-        message: "Failed to sign in",
+      toast.error('Unknown error occurred while signing in');
+      form.setError('root.serverError', {
+        message: 'Failed to sign in',
       });
     } finally {
       setIsLoading(false);
@@ -141,7 +141,7 @@ export default function SignInPage() {
                   {isLoading ? (
                     <Loader2 className="size-5 shrink-0 animate-spin" />
                   ) : (
-                    "Sign In"
+                    'Sign In'
                   )}
                 </Button>
               </form>

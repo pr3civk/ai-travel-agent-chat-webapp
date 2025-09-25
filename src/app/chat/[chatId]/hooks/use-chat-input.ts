@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { isServer } from "@/utils/env";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { isServer } from '@/utils/env';
 
 type Props = {
   chatId: string;
@@ -10,10 +10,10 @@ type Props = {
 
 export function useChatInput({ chatId, defaultPlaceholder }: Props) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const cachedLocalStorageKey = useMemo(() => {
-    const CACHE_KEY_PREFIX = "cached-chat-input-";
+    const CACHE_KEY_PREFIX = 'cached-chat-input-';
 
     if (!chatId) {
       return undefined;
@@ -22,10 +22,11 @@ export function useChatInput({ chatId, defaultPlaceholder }: Props) {
   }, [chatId]);
 
   useEffect(() => {
-    if (!chatId || isServer || !cachedLocalStorageKey) return;
+    if (!chatId || isServer || !cachedLocalStorageKey) {
+      return;
+    }
 
     const timeout = setTimeout(() => {
-     
       localStorage.setItem(cachedLocalStorageKey, inputValue);
     }, 600);
 
@@ -33,7 +34,9 @@ export function useChatInput({ chatId, defaultPlaceholder }: Props) {
   }, [chatId, inputValue, cachedLocalStorageKey]);
 
   useEffect(() => {
-    if (!chatId || isServer || !cachedLocalStorageKey) return;
+    if (!chatId || isServer || !cachedLocalStorageKey) {
+      return;
+    }
 
     const cachedInputValue = localStorage.getItem(cachedLocalStorageKey);
     if (!cachedInputValue) {
@@ -50,13 +53,15 @@ export function useChatInput({ chatId, defaultPlaceholder }: Props) {
       const value = e.target.value;
       setInputValue(value);
     },
-    []
+    [],
   );
 
   const resetInputValue = useCallback(() => {
-    if (!chatId || isServer || !cachedLocalStorageKey) return;
+    if (!chatId || isServer || !cachedLocalStorageKey) {
+      return;
+    }
 
-    setInputValue("");
+    setInputValue('');
     localStorage.removeItem(cachedLocalStorageKey);
   }, [chatId, cachedLocalStorageKey]);
 
@@ -65,10 +70,10 @@ export function useChatInput({ chatId, defaultPlaceholder }: Props) {
       e.preventDefault();
 
       const target = e.target as HTMLTextAreaElement;
-      target.style.height = "auto";
+      target.style.height = 'auto';
       target.style.height = `${target.scrollHeight}px`;
     },
-    []
+    [],
   );
 
   const options = useMemo(
@@ -79,7 +84,7 @@ export function useChatInput({ chatId, defaultPlaceholder }: Props) {
       onChange: handleInputChange,
       onInput: handleInputInput,
     }),
-    [inputValue, defaultPlaceholder, handleInputChange, handleInputInput]
+    [inputValue, defaultPlaceholder, handleInputChange, handleInputInput],
   );
 
   return {

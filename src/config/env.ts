@@ -1,10 +1,10 @@
-import { isServer } from "@/utils/env";
-import { z } from "zod";
+import { z } from 'zod';
+import { isServer } from '@/utils/env';
 
 export enum NodeEnv {
-  Development = "development",
-  Test = "test",
-  Production = "production",
+  Development = 'development',
+  Test = 'test',
+  Production = 'production',
 }
 
 /**
@@ -13,7 +13,7 @@ export enum NodeEnv {
  */
 const server = z.object({
   NODE_ENV: z.enum(NodeEnv).optional().default(NodeEnv.Development),
-  OPEN_AI_KEY: z.string(),
+  OPENAI_API_KEY: z.string(),
 });
 
 /**
@@ -23,7 +23,7 @@ const server = z.object({
 const client = z.object({
   NEXT_PUBLIC_CONVEX_URL: z.string(),
   NEXT_PUBLIC_CONVEX_API_CALL_URL: z.string(),
-  NEXT_PUBLIC_URL: z.string().optional().default("http://localhost:3000"),
+  NEXT_PUBLIC_URL: z.string().optional().default('http://localhost:3000'),
 });
 
 /**
@@ -36,9 +36,9 @@ const processEnv = () => ({
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
   NEXT_PUBLIC_CONVEX_API_CALL_URL: process.env.NEXT_PUBLIC_CONVEX_URL?.replace(
     /.cloud$/,
-    ".site"
+    '.site',
   ),
-  OPEN_AI_KEY: process.env.OPEN_AI_KEY,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 });
 
 const merged = server.extend(client.shape);
@@ -46,7 +46,7 @@ const merged = server.extend(client.shape);
 type MergedOutput = z.infer<typeof merged>;
 
 const createEnv = (): MergedOutput => {
-  if (process.env.SKIP_ENV_VALIDATION === "true") {
+  if (process.env.SKIP_ENV_VALIDATION === 'true') {
     return processEnv() as MergedOutput;
   }
 
@@ -55,20 +55,20 @@ const createEnv = (): MergedOutput => {
     : client.safeParse(processEnv()); // on client we can only validate the ones that are exposed
 
   if (parsed.success === false) {
-    console.error("Invalid environment variables:", z.treeifyError(parsed.error));
-    throw new Error("Invalid environment variables");
+    console.error('Invalid environment variables:', z.treeifyError(parsed.error));
+    throw new Error('Invalid environment variables');
   }
 
   return new Proxy(parsed.data, {
     get(target, prop) {
-      if (typeof prop !== "string") {
+      if (typeof prop !== 'string') {
         return undefined;
       }
 
-      if (!isServer && !prop.startsWith("NEXT_PUBLIC_")) {
+      if (!isServer && !prop.startsWith('NEXT_PUBLIC_')) {
         throw new Error(
           process.env.NODE_ENV === NodeEnv.Production
-            ? "Attempted to access a server-side environment variable on the client"
+            ? 'Attempted to access a server-side environment variable on the client'
             : `Attempted to access server-side environment variable '${prop}' on the client`,
         );
       }
@@ -89,4 +89,4 @@ const getEnv = () => {
 
 const env = getEnv();
 
-export { env, server, client };
+export { client, env, server };

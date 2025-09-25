@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { APP_ROUTES } from "@/config/routes";
-import { useAuthActions } from "@convex-dev/auth/react";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useAuthActions } from '@convex-dev/auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { APP_ROUTES } from '@/config/routes';
 
-interface Props {
-  children: (props: { handleLogout: () => void, isSigningOut: boolean }) => React.ReactNode;
+type Props = {
+  children: (props: { handleLogout: () => void; isSigningOut: boolean }) => React.ReactNode;
   redirectTo?: string;
-}   
+};
 
 export function LogoutWrapper({ children, redirectTo = APP_ROUTES.SIGN_IN }: Props) {
-    const { signOut } = useAuthActions();
+  const { signOut } = useAuthActions();
 
-    const router = useRouter();
+  const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   async function handleLogout() {
@@ -23,7 +23,7 @@ export function LogoutWrapper({ children, redirectTo = APP_ROUTES.SIGN_IN }: Pro
       await signOut();
       router.push(redirectTo);
     } catch (error) {
-        toast.error("Failed to logout");
+      toast.error('Failed to logout');
       console.error(error);
     } finally {
       setIsSigningOut(false);
