@@ -4,7 +4,7 @@ import type { UIMessage } from '@ai-sdk/react';
 import type { UIDataTypes, UIMessagePart, UITools } from 'ai';
 import { Bot, Send, User } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Markdown } from '@/components/markdown';
 import { useChatInput } from '../hooks/use-chat-input';
 import { useChatMessages } from '../hooks/use-chat-messages';
@@ -14,53 +14,27 @@ export default function ChatBox({ chatId }: { chatId: string }) {
     chatId,
     defaultPlaceholder: 'Type your message...',
   });
-  const scrollToRef = useRef<HTMLDivElement>(null);
-  const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const lastMessageRef = useRef<HTMLDivElement>(null);
   const { messages, handleSubmit } = useChatMessages({
     input: chatInput.inputValue,
   });
 
-  // Check if last message is visible and scroll if needed
-  const checkAndScrollToBottom = useCallback(() => {
-    if (!lastMessageRef.current || !messagesContainerRef.current) {
-      return;
-    }
+  const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
-    const lastMessageRect = lastMessageRef.current.getBoundingClientRect();
-    const containerRect = messagesContainerRef.current.getBoundingClientRect();
-
-    // Check if bottom of last message is visible in container
-    const isLastMessageVisible = lastMessageRect.bottom <= containerRect.bottom;
-
-    if (!isLastMessageVisible) {
-      scrollToRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
-
-  // Auto-scroll when messages change
   useEffect(() => {
-    if (messages.length > 0) {
-      // Small delay to ensure DOM is updated
-      const timeoutId = setTimeout(checkAndScrollToBottom, 100);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [messages, checkAndScrollToBottom]);
+    endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-full max-h-[800px] w-full mx-auto">
       {/* Chat Messages Container */}
       <div className="flex-1 overflow-hidden">
         <div
-          ref={messagesContainerRef}
           className="h-full overflow-y-auto px-4 py-6 space-y-4"
         >
           {messages.map((message, index) => {
-            const isLastMessage = index === messages.length - 1;
             return (
               <motion.div
                 key={message.id}
-                ref={isLastMessage ? lastMessageRef : null}
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{
@@ -103,14 +77,13 @@ export default function ChatBox({ chatId }: { chatId: string }) {
               </motion.div>
             );
           })}
+          <div ref={endOfMessagesRef} />
         </div>
       </div>
-      <div ref={scrollToRef} />
 
       {/* Input Area */}
       <form
         onSubmit={(e) => {
-          scrollToRef.current?.scrollIntoView({ behavior: 'smooth' });
           handleSubmit(e);
           chatInput.resetInputValue();
         }}
