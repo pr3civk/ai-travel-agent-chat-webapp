@@ -40,7 +40,7 @@ export default function RootLayout({
               <AppSidebar />
               <SidebarInset className="flex flex-col">
                 <Navbar />
-                <main className="flex-1 py-2 px-4">
+                <main className="flex-1 py-2 px-4 overflow-hidden">
                   {children}
                 </main>
               </SidebarInset>
