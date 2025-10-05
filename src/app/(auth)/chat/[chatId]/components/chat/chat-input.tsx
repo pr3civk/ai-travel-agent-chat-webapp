@@ -38,16 +38,17 @@ export function ChatInput({ onSubmit, inputOptions, onResetInput }: Props) {
                 handleKeyDown(e, () =>
                   handleSubmit(e as unknown as FormEvent<HTMLFormElement>))
               }
-              className="w-full resize-none  min-h-[20px] max-h-36"
+              className="w-full resize-none  min-h-5 max-h-36"
               rows={1}
               {...inputOptions}
             />
           </div>
           <button
+            aria-label="Send message"
             type="submit"
             className="active:scale-95 hover:scale-105 flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center text-white hover:from-blue-500 hover:to-purple-600 transition-all duration-200"
           >
-            <Send className="size-4" />
+            <Send className="size-4 shrink-0" aria-hidden="true" />
           </button>
         </div>
       </motion.div>

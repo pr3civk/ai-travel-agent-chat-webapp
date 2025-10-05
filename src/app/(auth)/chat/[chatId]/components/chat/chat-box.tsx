@@ -15,7 +15,7 @@ export default function ChatBox({ chatId }: { chatId: string }) {
   });
 
   return (
-    <div className="flex flex-col h-full w-full mx-auto overflow-hidden max-h-[calc(100dvh-80px)] max-w-5xl">
+    <div className="flex flex-col size-full overflow-hidden max-h-[calc(100dvh-80px)]">
       <MessagesList
         messages={messages}
         isWaitingForResponse={isWaitingForResponse}

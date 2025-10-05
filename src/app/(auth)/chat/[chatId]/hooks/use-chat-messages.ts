@@ -44,6 +44,12 @@ export function useChatMessages({ input }: Props) {
         await chat.sendMessage({ text: input });
       } catch (err) {
         console.log({ err });
+
+        // Handle rate limit errors specifically
+        if (err instanceof Error && err.message.includes('Rate limit exceeded')) {
+          // You can add toast notification here
+          console.error('Rate limit exceeded. Please try again later.');
+        }
       }
     }
   }

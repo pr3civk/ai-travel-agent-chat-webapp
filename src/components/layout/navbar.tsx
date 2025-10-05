@@ -4,7 +4,7 @@ import React from 'react';
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full">
+    <nav className="sticky top-0 z-50 w-full  max-w-5xl mx-auto">
       <div className="w-full">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center w-full">
